@@ -1,5 +1,7 @@
 
 #define RESET "\033[0m"
+#define RM_CURSOR "\033[?25l"
+#define RESTORE_CURSOR "\033[?25h"
 
 enum Color
 {

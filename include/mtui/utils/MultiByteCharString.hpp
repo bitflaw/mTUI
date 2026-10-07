@@ -28,7 +28,7 @@ struct Chunk
   u8 offsets[MAX_CHUNK_SIZE] {};
 };
 
-struct MultiByteCharSlice
+struct MultiByteChar
 {
   u8 size;
   const char* data;
@@ -50,7 +50,7 @@ struct MultiByteCharSlice
     return width;
   }
 
-  friend std::ostream& operator<< (std::ostream& os, const MultiByteCharSlice& mbslice)
+  friend std::ostream& operator<< (std::ostream& os, const MultiByteChar& mbslice)
   {
     std::string_view slice (mbslice.data, mbslice.size);
     os<<slice;
@@ -105,7 +105,7 @@ public:
 
   u64 size () const { return length; }
   void reserve (u64 n_bytes) { chunks.reserve(n_bytes); }
-  MultiByteCharSlice operator[] (u64 index)
+  MultiByteChar operator[] (u64 index)
   {
     if (index >= length)
       throw std::out_of_range("Index out of range: " + std::to_string(index));
@@ -126,7 +126,7 @@ public:
 
         u8 slice_len = end_byte - start_byte;
 
-        return MultiByteCharSlice {
+        return MultiByteChar {
           .size = slice_len,
             .data = (const char*)(chunk.data + start_byte)
         };
